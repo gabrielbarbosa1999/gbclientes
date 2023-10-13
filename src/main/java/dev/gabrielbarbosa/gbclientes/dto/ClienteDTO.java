@@ -18,6 +18,9 @@ public class ClienteDTO {
 
     private Integer children;
 
+    public ClienteDTO() {
+    }
+
     public ClienteDTO(Cliente cliente) {
         id = cliente.getId();
         name = cliente.getName();
