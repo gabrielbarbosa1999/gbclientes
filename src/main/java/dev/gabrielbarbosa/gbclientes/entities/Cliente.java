@@ -44,9 +44,16 @@ public class Cliente {
         this.children = clienteDTO.getChildren();
     }
 
+    public void update(ClienteDTO clienteDTO) {
+        this.name = clienteDTO.getName();
+        this.cpf = clienteDTO.getCpf();
+        this.income = clienteDTO.getIncome();
+        this.birthDate = clienteDTO.getBirthDate();
+        this.children = clienteDTO.getChildren();
+    }
+
     public Long getId() {
         return id;
-
     }
 
     public String getName() {

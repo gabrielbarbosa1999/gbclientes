@@ -1,5 +1,6 @@
 package dev.gabrielbarbosa.gbclientes.services;
 
+import ch.qos.logback.core.net.server.Client;
 import dev.gabrielbarbosa.gbclientes.dto.ClienteDTO;
 import dev.gabrielbarbosa.gbclientes.entities.Cliente;
 import dev.gabrielbarbosa.gbclientes.repositories.ClienteRepository;
@@ -36,4 +37,15 @@ public class ClienteService {
         return new ClienteDTO(cliente);
     }
 
+    public ClienteDTO update(Long id, ClienteDTO clienteDTO) {
+        Cliente cliente = clienteRepository.findById(id).orElseThrow(() -> new NotFoundClientException(CLIENTE_NOT_FOUND));
+        cliente.update(clienteDTO);
+        cliente = clienteRepository.save(cliente);
+        return new ClienteDTO(cliente);
+    }
+
+    public void delete(Long id) {
+        Cliente cliente = clienteRepository.findById(id).orElseThrow(() -> new NotFoundClientException(CLIENTE_NOT_FOUND));
+        clienteRepository.delete(cliente);
+    }
 }

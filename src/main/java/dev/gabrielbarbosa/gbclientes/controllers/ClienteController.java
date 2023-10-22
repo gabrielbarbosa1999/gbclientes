@@ -3,6 +3,7 @@ package dev.gabrielbarbosa.gbclientes.controllers;
 import dev.gabrielbarbosa.gbclientes.dto.ClienteDTO;
 import dev.gabrielbarbosa.gbclientes.entities.Cliente;
 import dev.gabrielbarbosa.gbclientes.services.ClienteService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,11 +33,23 @@ public class ClienteController {
     }
 
     @PostMapping
-    public ResponseEntity<ClienteDTO> create(@RequestBody ClienteDTO clienteDTO) {
+    public ResponseEntity<ClienteDTO> create(@Valid @RequestBody ClienteDTO clienteDTO) {
         ClienteDTO cliente = clienteService.create(clienteDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(cliente.getId()).toUri();
         return ResponseEntity.created(uri).body(cliente);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ClienteDTO> update(@PathVariable Long id, @Valid @RequestBody ClienteDTO clienteDTO) {
+        ClienteDTO cliente = clienteService.update(id, clienteDTO);
+        return ResponseEntity.ok(cliente);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        clienteService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 
 }
